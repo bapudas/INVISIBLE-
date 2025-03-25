@@ -263,3 +263,100 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+// Skills Section Animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab Functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            // Hide all tab contents
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Show the selected tab content
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+    
+    // Animate circular progress bars when section is in view
+    const skillsSection = document.querySelector('.skills-section');
+    const circularProgresses = document.querySelectorAll('.circular-progress');
+    
+    if (skillsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animate progress circles
+                    circularProgresses.forEach(progress => {
+                        const value = progress.getAttribute('data-value');
+                        const dashOffset = 314 - (314 * value) / 100;
+                        progress.style.setProperty('--dash-offset', dashOffset);
+                        
+                        // Animate progress value text
+                        const progressValue = progress.querySelector('.progress-value');
+                        let start = 0;
+                        const end = parseInt(value);
+                        const duration = 1500;
+                        const increment = end / (duration / 16);
+                        
+                        const timer = setInterval(() => {
+                            start += increment;
+                            if (start >= end) {
+                                start = end;
+                                clearInterval(timer);
+                            }
+                            progressValue.textContent = Math.round(start) + '%';
+                        }, 16);
+                        
+                        // Create SVG circle for each progress
+                        const svgNS = "http://www.w3.org/2000/svg";
+                        const svg = document.createElementNS(svgNS, "svg");
+                        const circle = document.createElementNS(svgNS, "circle");
+                        
+                        circle.setAttribute('cx', '50%');
+                        circle.setAttribute('cy', '50%');
+                        circle.setAttribute('r', '50');
+                        circle.setAttribute('stroke', 'url(#progress-gradient)');
+                        circle.setAttribute('stroke-dasharray', '314');
+                        circle.setAttribute('stroke-dashoffset', '314');
+                        
+                        // Add gradient definition
+                        const defs = document.createElementNS(svgNS, "defs");
+                        const gradient = document.createElementNS(svgNS, "linearGradient");
+                        gradient.setAttribute('id', 'progress-gradient');
+                        gradient.setAttribute('x1', '0%');
+                        gradient.setAttribute('y1', '0%');
+                        gradient.setAttribute('x2', '100%');
+                        gradient.setAttribute('y2', '100%');
+                        
+                        const stop1 = document.createElementNS(svgNS, "stop");
+                        stop1.setAttribute('offset', '0%');
+                        stop1.setAttribute('stop-color', '#64b5f6');
+                        
+                        const stop2 = document.createElementNS(svgNS, "stop");
+                        stop2.setAttribute('offset', '100%');
+                        stop2.setAttribute('stop-color', '#1976d2');
+                        
+                        gradient.appendChild(stop1);
+                        gradient.appendChild(stop2);
+                        defs.appendChild(gradient);
+                        svg.appendChild(defs);
+                        svg.appendChild(circle);
+                        progress.appendChild(svg);
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(skillsSection);
+    }
+});
