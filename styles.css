@@ -1,0 +1,131 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    min-height: 200vh; /* For scrolling demo */
+}
+
+.section-content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 80px;
+}
+
+/* Glassmorphism Navbar Styles */
+.glass-navbar {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    padding: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.glass-navbar.scrolled {
+    background: rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Styles */
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.logo-glow {
+    transition: all 0.3s ease;
+}
+
+.logo-glow:hover {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+}
+
+/* Navigation Link Styles */
+.nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500;
+    margin: 0 10px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-glow:hover {
+    color: white !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.nav-glow.active {
+    color: white !important;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+}
+
+.nav-glow::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: white;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.nav-glow:hover::after {
+    width: 100%;
+}
+
+.nav-glow.active::after {
+    width: 100%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+/* Mobile Menu Styles */
+.navbar-toggler {
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* Mobile Menu Background */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 15px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    
+    .nav-item {
+        margin: 5px 0;
+    }
+    
+    .nav-link {
+        padding: 10px 15px !important;
+    }
+    
+    .nav-glow::after {
+        display: none;
+    }
+}
+
+/* Smooth transition for mobile menu */
+.navbar-collapse {
+    transition: all 0.4s ease;
+      }
