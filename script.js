@@ -220,3 +220,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// About Section Animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate elements when scrolling to about section
+    const aboutSection = document.querySelector('.about-section');
+    const profileCard = document.querySelector('.profile-card');
+    const aboutContent = document.querySelector('.about-content');
+    
+    if (aboutSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animate profile card
+                    if (profileCard) {
+                        profileCard.style.opacity = '1';
+                        profileCard.style.transform = 'translateY(0)';
+                    }
+                    
+                    // Animate about content
+                    if (aboutContent) {
+                        aboutContent.style.opacity = '1';
+                        aboutContent.style.transform = 'translateY(0)';
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(aboutSection);
+        
+        // Set initial styles for animation
+        if (profileCard) {
+            profileCard.style.opacity = '0';
+            profileCard.style.transform = 'translateY(30px)';
+            profileCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        }
+        
+        if (aboutContent) {
+            aboutContent.style.opacity = '0';
+            aboutContent.style.transform = 'translateY(30px)';
+            aboutContent.style.transition = 'opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s';
+        }
+    }
+});
